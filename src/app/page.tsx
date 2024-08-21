@@ -1,14 +1,16 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Main from './components/Main';
 import Sidebar from './components/Sidebar';
 
 export default function Dashboard() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isAvatarOpen, setAvatarOpen] = useState(false);
-
   const [isNotificationOpen, setNotificationOpen] = useState(false);
+
+  const avatarRef = useRef<HTMLDivElement | null>(null);
+  const notificationRef = useRef<HTMLDivElement | null>(null);
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -22,12 +24,23 @@ export default function Dashboard() {
     }
   };
 
+  const handleClickOutside = (event: MouseEvent) => {
+    if (avatarRef.current && !avatarRef.current.contains(event.target as Node)) {
+      setAvatarOpen(false);
+    }
+    if (notificationRef.current && !notificationRef.current.contains(event.target as Node)) {
+      setNotificationOpen(false);
+    }
+  };
+
   useEffect(() => {
     handleResize(); // Set initial state based on screen size
     window.addEventListener('resize', handleResize); // Add resize event listener
+    document.addEventListener('mousedown', handleClickOutside); // Add mousedown event listener
 
     return () => {
-      window.removeEventListener('resize', handleResize); // Clean up event listener
+      window.removeEventListener('resize', handleResize); // Clean up resize event listener
+      document.removeEventListener('mousedown', handleClickOutside); // Clean up mousedown event listener
     };
   }, []);
 
@@ -84,48 +97,49 @@ export default function Dashboard() {
             </a>
           </div>
           <div className="flex items-center space-x-4">
-            <button
-              onClick={() => setNotificationOpen(!isNotificationOpen)}
-              className="relative p-2 text-gray-600 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path d="M15 17h5l-1.403-1.403A4.99 4.99 0 0018 13V7a6 6 0 00-12 0v6a4.99 4.99 0 00-1.597 2.597L2 17h5m8 0v1a2 2 0 01-4 0v-1m8 1a2 2 0 01-2-2m0-3a2 2 0 01-2-2m2 0a2 2 0 012 2z" />
-              </svg>
-              {isNotificationOpen && (
-                <div className="absolute right-0 w-64 mt-2 bg-white border border-gray-200 rounded shadow-lg">
-                  <ul className="py-2">
-                    <li>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-                      >
-                        Notification 1
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-                      >
-                        Notification 2
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-                      >
-                        Notification 3
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              )}
-            </button>
+            <div className="relative" ref={notificationRef}>
+              <button
+                onClick={() => setNotificationOpen(!isNotificationOpen)}
+                className="relative p-2 text-gray-600 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M15 17h5l-1.403-1.403A4.99 4.99 0 0018 13V7a6 6 0 00-12 0v6a4.99 4.99 0 00-1.597 2.597L2 17h5m8 0v1a2 2 0 01-4 0v-1m8 1a2 2 0 01-2-2m0-3a2 2 0 01-2-2m2 0a2 2 0 012 2z" />
+                </svg>
+                {isNotificationOpen && (
+                  <div className="absolute right-0 w-64 mt-2 bg-white border border-gray-200 rounded shadow-lg">
+                    <ul className="py-2">
+                      <li>
+                        <a
+                          href="#"
+                          className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                        >
+                          Notification 1
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                        >
+                          Notification 2
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                        >
+                          Notification 3
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </button>
+            </div>
 
             {/* Avatar Dropdown */}
-
-            <div className="relative">
+            <div className="relative" ref={avatarRef}>
               <button
                 onClick={() => setAvatarOpen(!isAvatarOpen)}
                 className="flex items-center p-2 text-gray-600 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
