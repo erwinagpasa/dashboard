@@ -16,7 +16,6 @@ const sidebarLinks: SidebarLink[] = [
     icon: <FiGrid className="w-4 h-4 mr-3" />,
     label: 'Dashboard',
   },
-
   {
     href: '#',
     icon: <FiBookOpen className="w-4 h-4 mr-3" />,
