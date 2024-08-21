@@ -1,4 +1,3 @@
-// Dashboard.tsx
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -20,21 +19,21 @@ export default function Dashboard() {
     };
   }, []);
 
-
   return (
     <>
       <Navbar isSidebarOpen={isSidebarOpen} setSidebarOpen={setSidebarOpen} />
-      <div className="relative flex pt-[70px] bg-gray-50 dark:bg-gray-900">
-        <aside
-          id="sidebar"
-          className={`fixed top-18 left-0 z-20 h-full bg-gray-800 text-white w-64 transition-transform transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:relative lg:translate-x-0 lg:w-64 lg:h-auto lg:block`}
-          aria-label="Sidebar"
-        >
-          {/* Sidebar content */}
+      <div className="relative flex bg-gray-50">
+        <aside id="sidebar"
+          className={`fixed top-[70px] left-0 z-20 h-full border-r border-gray-200 bg-white w-64 transition-transform transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 lg:w-64 lg:h-full`}
+          aria-label="Sidebar">
           <Sidebar />
         </aside>
 
-        <main className={`flex-1 h-screen transition-transform duration-300 ${isSidebarOpen ? 'lg:ml-0' : ''}`}>
+        {isSidebarOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-10 lg:hidden" onClick={() => setSidebarOpen(false)} />
+        )}
+
+        <main className={`flex-1 mt-[75px] h-screen transition-transform duration-300 ${isSidebarOpen ? 'lg:ml-64' : ''}`}>
           <Main />
           {/* <Footer /> */}
         </main>

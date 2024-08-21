@@ -16,11 +16,7 @@ const sidebarLinks: SidebarLink[] = [
     icon: <FiGrid className="w-4 h-4 mr-3" />,
     label: 'Dashboard',
   },
-  {
-    href: '#',
-    icon: <FiSettings className="w-4 h-4 mr-3" />,
-    label: 'Settings',
-  },
+
   {
     href: '#',
     icon: <FiBookOpen className="w-4 h-4 mr-3" />,
@@ -30,6 +26,11 @@ const sidebarLinks: SidebarLink[] = [
       { href: '#', label: 'Contact Support' },
       { href: '#', label: 'Feedback' },
     ],
+  },
+  {
+    href: '#',
+    icon: <FiSettings className="w-4 h-4 mr-3" />,
+    label: 'Settings',
   },
 ];
 
@@ -45,7 +46,7 @@ export default function Sidebar() {
               <>
                 <button
                   onClick={() => setOpenHelp(!openHelp)}
-                  className="flex items-center p-2 text-white text-base hover:bg-gray-700 rounded w-full text-left"
+                  className="flex items-center p-2  text-base hover:bg-gray-50 rounded w-full text-left"
                 >
                   {icon}
                   <span>{label}</span>
@@ -58,15 +59,10 @@ export default function Sidebar() {
                     <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
                   </svg>
                 </button>
-                <ul
-                  className={`mt-2 space-y-1 transition-transform duration-300 ${openHelp ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}
-                >
+                <ul className={`mt-2 space-y-1 transition-transform duration-300 ${openHelp ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
                   {subItems.map(({ href, label }) => (
                     <li key={label}>
-                      <a
-                        href={href}
-                        className="block px-4 py-2 text-white text-base hover:bg-gray-700 rounded"
-                      >
+                      <a href={href} className="block px-4 py-2 text-base hover:bg-gray-50 rounded">
                         {label}
                       </a>
                     </li>
@@ -74,10 +70,7 @@ export default function Sidebar() {
                 </ul>
               </>
             ) : (
-              <a
-                href={href}
-                className="flex items-center p-2 text-white text-base hover:bg-gray-700 rounded"
-              >
+              <a href={href} className="flex items-center p-2 text-base hover:bg-gray-50 rounded">
                 {icon}
                 <span>{label}</span>
               </a>
