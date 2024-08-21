@@ -116,7 +116,7 @@ export default function Main() {
                           <img className="flex-shrink-0 w-10 h-10" src="https://flowbite-admin-dashboard.vercel.app/images/products/imac.png" alt="imac image" />
                           <div className="ml-3">
                             <p className="font-medium text-gray-900 truncate ">
-                              Apple iMac 27"
+                              Apple iMac 27&quot;
                             </p>
                             <div className="flex items-center justify-end flex-1 text-sm text-green-500">
                               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -182,7 +182,7 @@ export default function Main() {
                           <img className="flex-shrink-0 w-10 h-10" src="https://flowbite-admin-dashboard.vercel.app/images/products/imac.png" alt="imac image" />
                           <div className="ml-3">
                             <p className="font-medium text-gray-900 truncate ">
-                              Apple iMac 24"
+                              Apple iMac 24&quot;
                             </p>
                             <div className="flex items-center justify-end flex-1 text-sm text-red-600 ">
                               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -193,7 +193,7 @@ export default function Main() {
                             </div>
                           </div>
                         </div>
-                        <div className="inline-flex items-center text-base font-semibold text-gray-900 ">
+                        <div className="inline-flex items-center text-base font-semibold text-gray-900">
                           $98,543
                         </div>
                       </div>
