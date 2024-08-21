@@ -2,7 +2,8 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
-import mountains from '../../../public/next.svg';
+import logo from '../../../public/next.svg';
+import avatarImage from '../../../public/erwin.png';
 import { handleResize } from '../lib/resizeHandler';
 import { handleClickOutside } from '../lib/handleClickOutside';
 import { FiBell } from "react-icons/fi";
@@ -23,16 +24,17 @@ export default function Navbar({ isSidebarOpen, setSidebarOpen }: NavbarProps) {
   };
 
   useEffect(() => {
-    const handleResizeEvent = () => handleResize(setSidebarOpen); // Define the event handler
-    handleResizeEvent(); // Set initial state based on screen size
-    window.addEventListener('resize', handleResizeEvent); // Add resize event listener
+    const handleResizeEvent = () => handleResize(setSidebarOpen);
+    handleResizeEvent();
+    window.addEventListener('resize', handleResizeEvent);
 
-    const handleClickOutsideEvent = (event: MouseEvent) => handleClickOutside(event, avatarRef, notificationRef, setAvatarOpen, setNotificationOpen);
-    document.addEventListener('mousedown', handleClickOutsideEvent); // Add mousedown event listener
+    const handleClickOutsideEvent = (event: MouseEvent) =>
+      handleClickOutside(event, avatarRef, notificationRef, setAvatarOpen, setNotificationOpen);
+    document.addEventListener('mousedown', handleClickOutsideEvent);
 
     return () => {
-      window.removeEventListener('resize', handleResizeEvent); // Clean up resize event listener
-      document.removeEventListener('mousedown', handleClickOutsideEvent); // Clean up mousedown event listener
+      window.removeEventListener('resize', handleResizeEvent);
+      document.removeEventListener('mousedown', handleClickOutsideEvent);
     };
   }, [setSidebarOpen]);
 
@@ -77,8 +79,8 @@ export default function Navbar({ isSidebarOpen, setSidebarOpen }: NavbarProps) {
             <a href="/" className="flex ml-2 md:mr-24">
               <Image
                 className="h-8 mr-3"
-                alt="Mountains"
-                src={mountains}
+                alt="Next Logo"
+                src={logo}
                 sizes="100vw"
                 style={{
                   width: '100px',
@@ -94,31 +96,34 @@ export default function Navbar({ isSidebarOpen, setSidebarOpen }: NavbarProps) {
             <div className="relative" ref={notificationRef}>
               <button
                 onClick={() => setNotificationOpen(!isNotificationOpen)}
+                aria-haspopup="true"
+                aria-expanded={isNotificationOpen}
                 className="relative p-2 text-gray-600 rounded hover:bg-gray-100 focus:outline-none"
               >
                 <FiBell className='w-5 h-5' />
                 {isNotificationOpen && (
-                  <div className="absolute right-0 w-64 mt-2 bg-white border border-gray-200 rounded shadow-lg">
-                    <ul className="py-2">
-                      <li><a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">Notification 1</a></li>
-                      <li><a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">Notification 2</a></li>
-                      <li><a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">Notification 3</a></li>
+                  <div className="absolute right-0 w-64 mt-6 bg-white border border-gray-200 rounded shadow-lg">
+                    <ul>
+                      <li><a href="#" className="block text-sm text-left px-3 py-2 text-gray-800 hover:bg-gray-100">Notification 1</a></li>
+                      <li><a href="#" className="block text-sm text-left px-3 py-2 text-gray-800 hover:bg-gray-100">Notification 2</a></li>
+                      <li><a href="#" className="block text-sm text-left px-3 py-2 text-gray-800 hover:bg-gray-100">Notification 3</a></li>
                     </ul>
                   </div>
                 )}
               </button>
             </div>
 
-            {/* Avatar Dropdown */}
             <div className="relative" ref={avatarRef}>
               <button
                 onClick={() => setAvatarOpen(!isAvatarOpen)}
+                aria-haspopup="true"
+                aria-expanded={isAvatarOpen}
                 className="flex items-center p-2 text-gray-600 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
               >
-                <img
-                  src="https://randomuser.me/api/portraits/men/32.jpg"
-                  alt="User Avatar"
+                <Image
                   className="w-8 h-8 rounded-full"
+                  alt="avatar"
+                  src={avatarImage}
                 />
                 <svg
                   className={`w-4 h-4 ml-2 transition-transform ${isAvatarOpen ? 'rotate-180' : ''}`}
@@ -130,31 +135,10 @@ export default function Navbar({ isSidebarOpen, setSidebarOpen }: NavbarProps) {
                 </svg>
               </button>
               {isAvatarOpen && (
-                <ul className="absolute right-0 w-48 mt-2 bg-white border border-gray-200 rounded shadow-lg">
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-                    >
-                      Profile
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-                    >
-                      Settings
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-                    >
-                      Logout
-                    </a>
-                  </li>
+                <ul className="absolute right-0 w-48 mt-[12px] bg-white border border-gray-200 rounded shadow-lg">
+                  <li><a href="#" className="block text-sm px-4 py-2 text-gray-800 hover:bg-gray-100">Profile</a></li>
+                  <li><a href="#" className="block text-sm px-4 py-2 text-gray-800 hover:bg-gray-100">Settings</a></li>
+                  <li><a href="#" className="block text-sm px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</a></li>
                 </ul>
               )}
             </div>
